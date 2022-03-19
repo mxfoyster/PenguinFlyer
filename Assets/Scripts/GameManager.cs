@@ -6,12 +6,13 @@ using UnityEngine.UI;
 /// <summary>
 /// My Singleton Score manager to keep track of all the scores.
 /// </summary>
-public class ScoreManager : MonoBehaviour 
+public class GameManager : MonoBehaviour 
 {
-    public static ScoreManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
  
     public Text scoreText;
     public int myScore;
+    public bool gameRunning;
 
     private void Awake()
     {

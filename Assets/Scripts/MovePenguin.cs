@@ -31,10 +31,9 @@ public class MovePenguin : MonoBehaviour
    
         //rotation speed
         sphere_EulerAngleVelocity = new Vector3(0, -100, 0);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.lockState = CursorLockMode.Confined;
 
         cameraPositionIndex = 1;
+        GameManager.Instance.gameRunning = true;
     }
 
     // Update is called once per frame
@@ -46,17 +45,20 @@ public class MovePenguin : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rotate
-        sphere_EulerAngleVelocity.y += (Input.GetAxis("Horizontal")* rotationMultiplier);
-        Quaternion deltaRotation = Quaternion.Euler(sphere_EulerAngleVelocity);
-        rigidBody.MoveRotation(deltaRotation);
+        if (GameManager.Instance.gameRunning)
+        {
+            //rotate
+            sphere_EulerAngleVelocity.y += (Input.GetAxis("Horizontal") * rotationMultiplier);
+            Quaternion deltaRotation = Quaternion.Euler(sphere_EulerAngleVelocity);
+            rigidBody.MoveRotation(deltaRotation);
 
-        // Up / Down & Forward / Backward vectors 
-        Vector3 newPosition = Vector3.up * (Input.GetAxis("UpDown") * movementUpMultiplier);
-        newPosition += Vector3.forward * (Input.GetAxis("Vertical") * movementFwdMultiplier);
-        
-        //update the position
-        rigidBody.position = rigidBody.transform.TransformPoint(newPosition);
+            // Up / Down & Forward / Backward vectors 
+            Vector3 newPosition = Vector3.up * (Input.GetAxis("UpDown") * movementUpMultiplier);
+            newPosition += Vector3.forward * (Input.GetAxis("Vertical") * movementFwdMultiplier);
+
+            //update the position
+            rigidBody.position = rigidBody.transform.TransformPoint(newPosition);
+        }
     }
 
 

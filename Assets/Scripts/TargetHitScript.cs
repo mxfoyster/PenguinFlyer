@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 
 public class TargetHitScript : MonoBehaviour
-{ 
-
+{   
     private void OnTriggerEnter(Collider other)
     {
         //this.gameObject.SetActive(false);
-        ScoreManager.Instance.myScore += 10;
+        GameManager.Instance.myScore += 10;
         
-        ScoreManager.Instance.scoreText.text = "Score: " + ScoreManager.Instance.myScore;
+        GameManager.Instance.scoreText.text = "Score: " + GameManager.Instance.myScore;
         ResetTarget();
         
     }
