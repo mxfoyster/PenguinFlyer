@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 
 public class TargetHitScript : MonoBehaviour
-{   
+{
+   
+
     private void OnTriggerEnter(Collider other)
     {
         //this.gameObject.SetActive(false);
@@ -13,6 +15,7 @@ public class TargetHitScript : MonoBehaviour
         
         GameManager.Instance.scoreText.text = "Score: " + GameManager.Instance.myScore;
         ResetTarget();
+        GameManager.Instance.audioManager.PlayHit();
         
     }
 

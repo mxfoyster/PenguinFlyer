@@ -32,6 +32,7 @@ public class TimerScript : MonoBehaviour
         _timeRemaining = 90;
         timerOn = true; //for now
         isPaused = false;
+        GameManager.Instance.audioManager.BkgSound("play");
     }
 
     // Update is called once per frame
@@ -66,10 +67,11 @@ public class TimerScript : MonoBehaviour
     private void GameOver()
     { 
         timerDisplay.text = "TIME UP!!! ";
-        EndScoreDisplay.text = "You Scored " + GameManager.Instance.myScore + "Points.";
+        EndScoreDisplay.text = "You Scored " + GameManager.Instance.myScore + " Points.";
         timerOn = false;
         GameManager.Instance.gameRunning = false;
         gameOverPanel.SetActive(true);
+        GameManager.Instance.audioManager.BkgSound("pause");
     }
 
 
@@ -84,6 +86,7 @@ public class TimerScript : MonoBehaviour
         GameManager.Instance.scoreText.text = "Score: " + GameManager.Instance.myScore;
         _timeRemaining = 90;  
         timerOn=true;
+        GameManager.Instance.audioManager.BkgSound("resume");
     }
 
     /// <summary>
@@ -112,12 +115,14 @@ public class TimerScript : MonoBehaviour
             GameManager.Instance.gameRunning = false;
             timerOn = false;
             timerDisplay.text = "PAUSED";
+            GameManager.Instance.audioManager.BkgSound("pause");
         }
         else if (_timeRemaining > 0)
         {
             isPaused = false;
             timerOn = true;
             GameManager.Instance.gameRunning = true;
+            GameManager.Instance.audioManager.BkgSound("resume");
         }
     }
 }
