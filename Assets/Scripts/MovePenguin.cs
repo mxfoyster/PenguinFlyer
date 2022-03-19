@@ -39,7 +39,7 @@ public class MovePenguin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKeyDown(KeyCode.F2))
             ToggleCameraView();
     }
 
@@ -72,19 +72,19 @@ public class MovePenguin : MonoBehaviour
                 mainCamera.transform.Rotate(0, -90, 0);
                 mainCamera.transform.Translate(Vector3.right * 15);
                 mainCamera.transform.Translate(Vector3.back * 20);
-                camText.text = "F1: Switch Cam (Behind)";
+                camText.text = "F1: HELP/PAUSE \nCamview: Behind";
 
                 break;
             case 2:
                 mainCamera.transform.Translate(Vector3.forward * 25);
-                camText.text = "F1: Switch Cam (In Front)";
+                camText.text = "F1: HELP/PAUSE \nCamview: In Front";
 
                 break;
             case 3:
                 mainCamera.transform.Translate(Vector3.back * 5);
                 mainCamera.transform.Translate(Vector3.left * 15);
                 mainCamera.transform.Rotate(0,90,0);
-                camText.text = "F1: Switch Cam (Left)";
+                camText.text = "F1: HELP/PAUSE \nCamview: Left";
                 cameraPositionIndex = 0;
                 break;
 

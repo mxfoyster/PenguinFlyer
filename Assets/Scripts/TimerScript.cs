@@ -10,30 +10,41 @@ public class TimerScript : MonoBehaviour
     private float _timeRemaining;
 
     //UI HUD stuff
-    [SerializeField]
-    private Text timerDisplay;
-    [SerializeField]
-    private Text EndScoreDisplay;
-    [SerializeField]
-    private GameObject gameOverPanel;
-    [SerializeField]
-    GameObject quitButton;
-    [SerializeField]
-    GameObject replayButton;
+    [SerializeField] private Text timerDisplay;
+    [SerializeField] private Text EndScoreDisplay;
     
+    [SerializeField] private GameObject startPanel;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject helpPanel;
+
     //Flags
     private bool timerOn;
     private bool isPaused;
 
+    private Coroutine endCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-
-        _timeRemaining = 90;
-        timerOn = true; //for now
-        isPaused = false;
-        GameManager.Instance.audioManager.BkgSound("play");
+        isPaused = true;
+        ResetGame();
+        GameManager.Instance.gameRunning = false;
+        timerOn = false;
     }
+
+
+    /// <summary>
+    /// Start button method for start screen
+    /// </summary>
+    public void OnClickStartButton()
+    {
+        GameManager.Instance.audioManager.BkgSound("play");
+        isPaused = false;
+        timerOn = true;
+        GameManager.Instance.gameRunning = true;
+        startPanel.SetActive(false);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -50,9 +61,9 @@ public class TimerScript : MonoBehaviour
         }
 
          //check for Pause Toggle
-        if (Input.GetKeyDown(KeyCode.F2)) PauseGame();
-        
-        
+        if (Input.GetKeyDown(KeyCode.F1)) PauseGame();
+        if (Input.GetKeyDown(KeyCode.F12)) OnClickQuitButton();
+
         if (_timeRemaining <= 0)
         {
             GameOver();
@@ -72,6 +83,7 @@ public class TimerScript : MonoBehaviour
         GameManager.Instance.gameRunning = false;
         gameOverPanel.SetActive(true);
         GameManager.Instance.audioManager.BkgSound("pause");
+        endCoroutine = StartCoroutine(GameManager.Instance.audioManager.PlayEndSounds(false, true));
     }
 
 
@@ -80,13 +92,23 @@ public class TimerScript : MonoBehaviour
     /// </summary>
     public void onClickReplay()
     {
+        GameManager.Instance.audioManager.BkgSound("resume");
+        ResetGame();
+    }
+
+    /// <summary>
+    /// Sets everything to start values either for after welcome screen
+    /// Or for "Another Go" on end screen
+    /// </summary>
+    private void ResetGame()
+    {
         gameOverPanel.SetActive(false);
         GameManager.Instance.gameRunning = true;
         GameManager.Instance.myScore = 0;
         GameManager.Instance.scoreText.text = "Score: " + GameManager.Instance.myScore;
         _timeRemaining = 90;  
         timerOn=true;
-        GameManager.Instance.audioManager.BkgSound("resume");
+        GameManager.Instance.audioManager._soundPlayed = false;
     }
 
     /// <summary>
@@ -105,7 +127,7 @@ public class TimerScript : MonoBehaviour
 
 
     /// <summary>
-    /// Pause Game method
+    /// Pause Game \ Help screen method
     /// </summary>
     private void PauseGame()
     {
@@ -116,6 +138,7 @@ public class TimerScript : MonoBehaviour
             timerOn = false;
             timerDisplay.text = "PAUSED";
             GameManager.Instance.audioManager.BkgSound("pause");
+            
         }
         else if (_timeRemaining > 0)
         {
@@ -123,6 +146,8 @@ public class TimerScript : MonoBehaviour
             timerOn = true;
             GameManager.Instance.gameRunning = true;
             GameManager.Instance.audioManager.BkgSound("resume");
+            
         }
+        helpPanel.SetActive(isPaused); //activate panel as necessary
     }
 }

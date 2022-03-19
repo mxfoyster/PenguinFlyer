@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip hitClip;
     [SerializeField] private AudioClip newHighScoreClip;
     [SerializeField] private AudioClip normalEndClip;
-    private bool _soundPlayed = false;
+    
+    [HideInInspector] public bool _soundPlayed = false;
 
     public void PlayHit()
     {
