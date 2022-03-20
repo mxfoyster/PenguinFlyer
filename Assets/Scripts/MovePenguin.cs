@@ -14,6 +14,7 @@ public class MovePenguin : MonoBehaviour
     private int cameraPositionIndex;
 
     private float turn, climb, move; //directions for movement
+    private Animation animPenguin;
 
 
     private void Awake()
@@ -25,6 +26,7 @@ public class MovePenguin : MonoBehaviour
     void Start()
     {
         rigidBody = this.GetComponent<Rigidbody>();
+        animPenguin = this.GetComponent<Animation>();
         movementFwdMultiplier = 2f;
         movementUpMultiplier = 0.4f;
         rotationMultiplier = 0.8f;
@@ -48,6 +50,8 @@ public class MovePenguin : MonoBehaviour
         turn = Input.GetAxis("Horizontal");
         climb = Input.GetAxis("UpDown");
         move = Input.GetAxis("Vertical");
+        if (move != 0 || climb != 0) animPenguin.Play("run");
+        else animPenguin.Play("idle");
     }
 
     private void FixedUpdate()
@@ -62,9 +66,12 @@ public class MovePenguin : MonoBehaviour
             // Up / Down & Forward / Backward vectors 
             Vector3 newPosition = Vector3.up * (climb * movementUpMultiplier);
             newPosition += Vector3.forward * (move * movementFwdMultiplier);
+           
 
             //update the position
             rigidBody.position = rigidBody.transform.TransformPoint(newPosition);
+
+            //this.gameObject.
         }
     }
 
