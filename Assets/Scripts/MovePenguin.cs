@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +12,8 @@ public class MovePenguin : MonoBehaviour
     private Camera mainCamera;
 
     private int cameraPositionIndex;
+
+    private float turn, climb, move; //directions for movement
 
 
     private void Awake()
@@ -41,6 +41,13 @@ public class MovePenguin : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F2))
             ToggleCameraView();
+        
+        
+        // We get our ionput here so we can't miss a key but we do movement in FixedUpdato
+        // to ensure it's not proportional to framerate
+        turn = Input.GetAxis("Horizontal");
+        climb = Input.GetAxis("UpDown");
+        move = Input.GetAxis("Vertical");
     }
 
     private void FixedUpdate()
@@ -48,13 +55,13 @@ public class MovePenguin : MonoBehaviour
         if (GameManager.Instance.gameRunning)
         {
             //rotate
-            sphere_EulerAngleVelocity.y += (Input.GetAxis("Horizontal") * rotationMultiplier);
+            sphere_EulerAngleVelocity.y += (turn * rotationMultiplier);
             Quaternion deltaRotation = Quaternion.Euler(sphere_EulerAngleVelocity);
             rigidBody.MoveRotation(deltaRotation);
 
             // Up / Down & Forward / Backward vectors 
-            Vector3 newPosition = Vector3.up * (Input.GetAxis("UpDown") * movementUpMultiplier);
-            newPosition += Vector3.forward * (Input.GetAxis("Vertical") * movementFwdMultiplier);
+            Vector3 newPosition = Vector3.up * (climb * movementUpMultiplier);
+            newPosition += Vector3.forward * (move * movementFwdMultiplier);
 
             //update the position
             rigidBody.position = rigidBody.transform.TransformPoint(newPosition);

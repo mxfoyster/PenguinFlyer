@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +35,7 @@ public class TimerScript : MonoBehaviour
     /// </summary>
     public void OnClickStartButton()
     {
+        GameManager.Instance.audioManager.unmuteSound = true; 
         GameManager.Instance.audioManager.BkgSound("play");
         isPaused = false;
         timerOn = true;
@@ -83,7 +81,7 @@ public class TimerScript : MonoBehaviour
         GameManager.Instance.gameRunning = false;
         gameOverPanel.SetActive(true);
         GameManager.Instance.audioManager.BkgSound("pause");
-        endCoroutine = StartCoroutine(GameManager.Instance.audioManager.PlayEndSounds(false, true));
+        endCoroutine = StartCoroutine(GameManager.Instance.audioManager.PlayEndSounds(false, GameManager.Instance.audioManager.unmuteSound));
     }
 
 
@@ -108,7 +106,7 @@ public class TimerScript : MonoBehaviour
         GameManager.Instance.scoreText.text = "Score: " + GameManager.Instance.myScore;
         _timeRemaining = 90;  
         timerOn=true;
-        GameManager.Instance.audioManager._soundPlayed = false;
+        GameManager.Instance.audioManager._soundPlayed = false; //reset our coroutine flag
     }
 
     /// <summary>

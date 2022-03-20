@@ -1,37 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    //our audio handles
     [SerializeField] private AudioSource soundClipSource;
     [SerializeField] private AudioSource BkgSoundClipSource;
     [SerializeField] private AudioClip hitClip;
     [SerializeField] private AudioClip newHighScoreClip;
     [SerializeField] private AudioClip normalEndClip;
     
-    [HideInInspector] public bool _soundPlayed = false;
+    [HideInInspector] public bool _soundPlayed = false; //coroutine flag
+    [HideInInspector] public bool unmuteSound; //mute status
 
     public void PlayHit()
     {
-        soundClipSource.PlayOneShot(hitClip);
-    }
-
-   
-
-    public void PlayHighScore()
-    {
-        soundClipSource.PlayOneShot(newHighScoreClip);
-    }
-
-    public void PlayEnd()
-    {
-        soundClipSource.PlayOneShot(normalEndClip);
-    }
-
-    public bool SoundPlaying()
-    {
-        return false;
+        if (unmuteSound) soundClipSource.PlayOneShot(hitClip);
     }
 
     /// <summary>
@@ -55,10 +39,16 @@ public class AudioManager : MonoBehaviour
         _soundPlayed = true;
     }
 
+    /// <summary>
+    /// Control the state of our background sound.
+    /// Checks unmuteSound status.
+    /// </summary>
+    /// <param name="soundState">"play", "pause", "resume" and "stop".</param>
     public void BkgSound(string soundState)
     {
-        switch (soundState)
-        {
+        if (unmuteSound)
+            switch (soundState)
+            {
             case "play":
                 BkgSoundClipSource.Play();
                 break;
@@ -71,6 +61,29 @@ public class AudioManager : MonoBehaviour
             case "stop":
                 BkgSoundClipSource.Stop();
                 break;
+            }
+    }
+
+
+    /// <summary>
+    /// Toggles between muted and unmuted
+    /// </summary>
+    public void ToggleAudio()
+    {
+        if (unmuteSound)
+        {
+            BkgSoundClipSource.Pause();
+            unmuteSound = false;
         }
+        else
+        {
+            BkgSoundClipSource.UnPause();
+            unmuteSound = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F10)) ToggleAudio(); //mute toggle key
     }
 }
