@@ -27,8 +27,8 @@ public class MovePenguin : MonoBehaviour
     {
         rigidBody = this.GetComponent<Rigidbody>();
         animPenguin = this.GetComponent<Animation>();
-        movementFwdMultiplier = 2f;
-        movementUpMultiplier = 0.4f;
+        movementFwdMultiplier = 400f;
+        movementUpMultiplier = 50f;
         rotationMultiplier = 0.8f;
    
         //rotation speed
@@ -52,6 +52,7 @@ public class MovePenguin : MonoBehaviour
         move = Input.GetAxis("Vertical");
         if (move != 0 || climb != 0) animPenguin.Play("run");
         else animPenguin.Play("idle");
+       
     }
 
     private void FixedUpdate()
@@ -64,14 +65,7 @@ public class MovePenguin : MonoBehaviour
             rigidBody.MoveRotation(deltaRotation);
 
             // Up / Down & Forward / Backward vectors 
-            Vector3 newPosition = Vector3.up * (climb * movementUpMultiplier);
-            newPosition += Vector3.forward * (move * movementFwdMultiplier);
-           
-
-            //update the position
-            rigidBody.position = rigidBody.transform.TransformPoint(newPosition);
-
-            //this.gameObject.
+            rigidBody.AddRelativeForce(new Vector3(0, climb * movementUpMultiplier, move * movementFwdMultiplier));
         }
     }
 

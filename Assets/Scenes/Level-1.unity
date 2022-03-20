@@ -1291,6 +1291,7 @@ GameObject:
   - component: {fileID: 1004416249}
   - component: {fileID: 1004416248}
   - component: {fileID: 1004416247}
+  - component: {fileID: 1004416251}
   m_Layer: 0
   m_Name: MainTerrain
   m_TagString: Untagged
@@ -1356,6 +1357,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1004416251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004416246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 632237b102e7da9469369755e08886db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1111732267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2059,6 +2072,7 @@ MonoBehaviour:
   scoreText: {fileID: 1420353904}
   myScore: 0
   gameRunning: 0
+  collideWithGround: 0
 --- !u!114 &1376685396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2120,7 +2134,7 @@ Rigidbody:
   m_GameObject: {fileID: 1384874428}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 4
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -2140,7 +2154,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384874428}
   m_Material: {fileID: 13400000, guid: 9f93f63d068b08c459038c40fce897d8, type: 2}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.7163618, y: 3.5710697, z: 3.67795}
