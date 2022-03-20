@@ -1719,9 +1719,10 @@ MonoBehaviour:
     CONTROLS</b></color>\n\n<color=\"red\">F2:-</color>  Change Camera View (Behind,
     In Front and Left Side)\n\n<color=\"red\">ARROW UP:-</color> Forwards          
     <color=\"red\">ARROW DOWN:-</color> Backwards\n\n<color=\"red\">ARROW LEFT:-</color>
-    Turn Left        <color=\"red\">ARROW RIGHT:-</color> Turn Right \n\n<color=\"red\">F
-    KEY:-</color> Climb                 <color=\"red\">V Key:-</color> Fall                  
-    \n\n <color=\"red\">F12:-</color> QUIT                   \n"
+    Turn Left        <color=\"red\">ARROW RIGHT:-</color> Turn Right \n\n<color=\"red\">'F'
+    KEY:-</color> Climb                 <color=\"red\">'V' Key:-</color> Fall                  
+    \n\n <color=\"red\">F 10:- </color> Mute Sound         <color=\"red\">F12:-</color>
+    QUIT                   \n"
 --- !u!222 &1228255021
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2550,6 +2551,7 @@ MonoBehaviour:
   newHighScoreClip: {fileID: 0}
   normalEndClip: {fileID: 8300000, guid: 8124d1792306504419bd5e8e5bb2822e, type: 3}
   _soundPlayed: 0
+  unmuteSound: 0
 --- !u!82 &1828181177
 AudioSource:
   m_ObjectHideFlags: 0
