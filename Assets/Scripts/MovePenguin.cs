@@ -7,20 +7,11 @@ public class MovePenguin : MonoBehaviour
     Rigidbody rigidBody;
     public float movementFwdMultiplier, movementUpMultiplier;
     public float rotationMultiplier;
-    public Text camText;
+   
     Vector3 sphere_EulerAngleVelocity;
-    private Camera mainCamera;
-
-    private int cameraPositionIndex;
-
+  
     private float turn, climb, move; //directions for movement
     private Animation animPenguin;
-
-
-    private void Awake()
-    {
-        mainCamera = Camera.main; //for efficiency, we call it here once and store it..
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,29 +21,21 @@ public class MovePenguin : MonoBehaviour
         movementFwdMultiplier = 400f;
         movementUpMultiplier = 50f;
         rotationMultiplier = 0.8f;
-   
-        //rotation speed
-        sphere_EulerAngleVelocity = new Vector3(0, -100, 0);
-
-        cameraPositionIndex = 1;
+        
+        sphere_EulerAngleVelocity = new Vector3(0, -100, 0);    //rotation speed   
         GameManager.Instance.gameRunning = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F2))
-            ToggleCameraView();
-        
-        
-        // We get our ionput here so we can't miss a key but we do movement in FixedUpdato
+        // We get our input here so we can't miss a key but we do movement in FixedUpdato
         // to ensure it's not proportional to framerate
         turn = Input.GetAxis("Horizontal");
         climb = Input.GetAxis("UpDown");
         move = Input.GetAxis("Vertical");
         if (move != 0 || climb != 0) animPenguin.Play("run");
         else animPenguin.Play("idle");
-       
     }
 
     private void FixedUpdate()
@@ -68,39 +51,5 @@ public class MovePenguin : MonoBehaviour
             rigidBody.AddRelativeForce(new Vector3(0, climb * movementUpMultiplier, move * movementFwdMultiplier));
         }
     }
-
-
-    private void ToggleCameraView()
-    {
-        cameraPositionIndex ++;
-
-        switch (cameraPositionIndex) 
-        { 
-            case 1:
-                mainCamera.transform.Rotate(0, -90, 0);
-                mainCamera.transform.Translate(Vector3.right * 15);
-                mainCamera.transform.Translate(Vector3.back * 20);
-                camText.text = "F1: HELP/PAUSE \nCamview: Behind";
-
-                break;
-            case 2:
-                mainCamera.transform.Translate(Vector3.forward * 25);
-                camText.text = "F1: HELP/PAUSE \nCamview: In Front";
-
-                break;
-            case 3:
-                mainCamera.transform.Translate(Vector3.back * 5);
-                mainCamera.transform.Translate(Vector3.left * 15);
-                mainCamera.transform.Rotate(0,90,0);
-                camText.text = "F1: HELP/PAUSE \nCamview: Left";
-                cameraPositionIndex = 0;
-                break;
-
-            case 4:
-                break;
-        }
-
-    }
-
 }
 
