@@ -20,7 +20,7 @@ public class MovePenguin : MonoBehaviour
         animPenguin = this.GetComponent<Animation>();
         movementFwdMultiplier = 400f;
         movementUpMultiplier = 50f;
-        rotationMultiplier = 0.8f;
+        rotationMultiplier = 1.5f;
         
         sphere_EulerAngleVelocity = new Vector3(0, -100, 0);    //rotation speed   
         GameManager.Instance.gameRunning = true;
@@ -34,8 +34,13 @@ public class MovePenguin : MonoBehaviour
         turn = Input.GetAxis("Horizontal");
         climb = Input.GetAxis("UpDown");
         move = Input.GetAxis("Vertical");
-        if (move != 0 || climb != 0) animPenguin.Play("run");
-        else animPenguin.Play("idle");
+        
+        //flying mode animations
+        if (!GameManager.Instance.walkMode)
+        {
+            if (move != 0 || climb != 0) animPenguin.Play("run");
+            else animPenguin.Play("idle");
+        }
     }
 
     private void FixedUpdate()
@@ -43,12 +48,29 @@ public class MovePenguin : MonoBehaviour
         if (GameManager.Instance.gameRunning)
         {
             //rotate
-            sphere_EulerAngleVelocity.y += (turn * rotationMultiplier);
-            Quaternion deltaRotation = Quaternion.Euler(sphere_EulerAngleVelocity);
-            rigidBody.MoveRotation(deltaRotation);
+            rigidBody.AddRelativeTorque(new Vector3(0, turn * rotationMultiplier, 0));            
+            
+            //Forward / Backward vectors 
+            rigidBody.AddRelativeForce(new Vector3(0, 0, move * movementFwdMultiplier));
 
-            // Up / Down & Forward / Backward vectors 
-            rigidBody.AddRelativeForce(new Vector3(0, climb * movementUpMultiplier, move * movementFwdMultiplier));
+            //Up / Down
+            if (!GameManager.Instance.walkMode) //flying movements
+            {
+                rigidBody.AddRelativeForce(new Vector3(0, climb * movementUpMultiplier, 0));
+            }
+            else //walk mode movements
+            {
+                if (move != 0) animPenguin.Play("walk");
+                else animPenguin.Play("idle");
+                rigidBody.useGravity = true;
+                
+                //if we climb, we leave walk mode
+                if (climb > 0)
+                {
+                    rigidBody.useGravity = false;
+                    GameManager.Instance.walkMode = false;
+                }
+            }
         }
     }
 }

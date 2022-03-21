@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public int myScore;
     public bool gameRunning;
-    public bool collideWithGround;
+    public bool walkMode;
     
 
     
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         audioManager.unmuteSound = false;
-        collideWithGround = false;
+        walkMode = false;
     }
 
 

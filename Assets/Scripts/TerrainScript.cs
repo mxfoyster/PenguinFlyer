@@ -15,8 +15,9 @@ public class TerrainScript : MonoBehaviour
     {
         
     }
-    private void OnTriggerEnter()
+    private void OnCollisionEnter()
     {
-      
+        GameManager.Instance.walkMode = true;
+
     }
 }

@@ -2086,7 +2086,7 @@ MonoBehaviour:
   scoreText: {fileID: 1420353904}
   myScore: 0
   gameRunning: 0
-  collideWithGround: 0
+  walkMode: 0
 --- !u!114 &1376685396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,11 +2148,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 4
-  m_AngularDrag: 0.05
+  m_AngularDrag: 2
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!4 &1384874432 stripped
 Transform:
