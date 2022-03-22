@@ -7,8 +7,6 @@ public class MovePenguin : MonoBehaviour
     Rigidbody rigidBody;
     public float movementFwdMultiplier, movementUpMultiplier;
     public float rotationMultiplier;
-   
-    Vector3 sphere_EulerAngleVelocity;
   
     private float turn, climb, move; //directions for movement
     private Animation animPenguin;
@@ -18,11 +16,10 @@ public class MovePenguin : MonoBehaviour
     {
         rigidBody = this.GetComponent<Rigidbody>();
         animPenguin = this.GetComponent<Animation>();
-        movementFwdMultiplier = 400f;
-        movementUpMultiplier = 50f;
-        rotationMultiplier = 1.5f;
+        movementFwdMultiplier = 550f;
+        movementUpMultiplier = 250f;
+        rotationMultiplier = 5f;
         
-        sphere_EulerAngleVelocity = new Vector3(0, -100, 0);    //rotation speed   
         GameManager.Instance.gameRunning = true;
     }
 
